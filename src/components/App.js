@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import * as img from "./img";
 
-import { Motion, spring } from 'react-motion'; 
+import {Motion, spring} from 'react-motion'; 
 
 import Scores from "./Scores";
 
@@ -54,14 +54,17 @@ class App extends Component {
   }
 
   render() {
-    const { currentGuesses, topScore } = this.state;
+    const { currentGuesses, topScore, currentOrder } = this.state;
     return (
       <div className="App">
-        <header className="h3 bg-green t0">
+        <header className="h3 bg-green t-0">
           <h1 className="pa2">Clicky imagy game</h1>
         </header>
+        {
+          topScore === 12 && <div className="f1">Congrats!!! You Win!!!</div>
+        }
         <div className="mw8 center ma3 pt5">
-          {this.state.currentOrder.map(x => (
+          {currentOrder.map(x => (
             <img
               className="mw4 ma3 grow"
               onClick={this.handleClick}

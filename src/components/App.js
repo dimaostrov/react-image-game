@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import "./App.css";
 import * as img from "./img";
 
+import { Motion, spring } from 'react-motion'; 
+
 import Scores from "./Scores";
+
 
 class App extends Component {
   constructor(props) {
@@ -18,29 +21,29 @@ class App extends Component {
   }
 
   componentDidMount() {
-    
+
   }
 
   componentDidUpdate () {
     this.setTopScore()
   }
-
+  
   handleClick(e) {
     let x = e.target.src.slice(35, -13).substring(0, 10);
     this.state.currentGuesses.includes(x)
-      ? this.loseGame()
-      : this.setState((previousState, currentProps) => {
-          return {
-            ...previousState,
-            currentGuesses: [...this.state.currentGuesses, x]
-          };
-        });
-    this.setState({ currentOrder: [...Object.values(img)] });
+    ? this.loseGame()
+    : this.setState((previousState, currentProps) => {
+      return {
+        ...previousState,
+        currentGuesses: [...this.state.currentGuesses, x]
+      };
+    });
+    this.setState({currentOrder: shuffleArray(Object.values(img))});
   }
-
+  
   setTopScore() {
     this.state.topScore < this.state.currentGuesses.length &&
-      this.setState({ topScore: this.state.currentGuesses.length });
+    this.setState({ topScore: this.state.currentGuesses.length });
   }
 
   loseGame() {
@@ -75,9 +78,11 @@ class App extends Component {
 
 export default App;
 
-function shuffleArray(array) {
+
+const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
   }
+  return array;
 }
